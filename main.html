@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Color Flipper</title>
+    <style>
+        #green {
+            background-color: green;
+        }
+
+        #red {
+            background-color: red;
+        }
+
+        #yellow {
+            background-color: yellow;
+        }
+
+        button {
+            align-self: center;
+            border-radius: 60px;
+            width: 1000px;
+            height: 70px;
+            margin: 10px;
+            margin-left: 23%;
+        }
+
+        h3 {
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: gold;
+        }
+
+        #image {
+            display: hide; 
+            width: 300px; 
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>How are you feeling today?</h3>
+
+    <button id="red" onclick="setColor('red', 'bad.png')">Bad</button>
+    <button id="yellow" onclick="setColor('yellow', 'fine.png')">Fine</button>
+    <button id="green" onclick="setColor('green', 'good.png')">Good</button>
+    <button onclick="startFlashing()">Amazing</button>
+
+    <audio id="amazingAudio" src="your-audio-file.mp3" preload="auto"></audio>
+    <img id="image" src="1.jpg" alt="Emotion Image">
+
+    <script>
+        const body = document.getElementsByTagName("body")[0];
+        const audio = document.getElementById("amazingAudio");
+        const image = document.getElementById("image");
+        let intervalId;
+
+        function setColor(color, imgSrc) {
+            clearInterval(intervalId);
+            body.style.backgroundColor = color;
+            audio.pause();
+            audio.currentTime = 0;
+            image.src; // Set the image source
+            image.style.display = 'block'; // Show the image
+        }
+
+        function randomColor() {
+            const red = Math.round(Math.random() * 255);
+            const green = Math.round(Math.random() * 255);
+            const blue = Math.round(Math.random() * 255);
+            return `rgb(${red}, ${green}, ${blue})`;
+        }
+
+        function startFlashing() {
+            clearInterval(intervalId);
+            let duration = 5000;
+            let endTime = Date.now() + duration;
+
+            audio.play();
+            intervalId = setInterval(() => {
+                body.style.backgroundColor = randomColor();
+
+                if (Date.now() >= endTime) {
+                    clearInterval(intervalId);
+                    audio.pause();
+                    audio.currentTime = 0;
+                    image.style.display = 'none'; // Hide the image after flashing
+                }
+            }, 300);
+        }
+    </script>
+</body>
+
+</html>
